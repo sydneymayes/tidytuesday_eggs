@@ -1,0 +1,41 @@
+---
+title: 'Tidy Tuesday: Eggs'
+author: "Sydney Mayes"
+date: "2023-04-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidytuesdayR)
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+tt_data <- tt_load("2023-04-11")
+egg_production<-tt_data$`egg-production`
+cage_free_percentages <- tt_data$`cage-free-percentages`
+
+```
+
+```{r}
+table_eggs <- egg_production %>% 
+  group_by(observed_month) %>% 
+  summarise(prod_type, n_eggs)
+
+ggplot(table_eggs, aes(x = observed_month,
+           y = n_eggs,
+           col = prod_type)) +
+  geom_point() +
+ #facet_wrap(~prod_type, ncol=1) +
+  scale_color_viridis_d(option = 'rocket') +
+  labs(x='Date', y= 'number of eggs') +
+  theme_bw() 
+
+
+
+
+  
+```
+
